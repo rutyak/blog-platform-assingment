@@ -5,7 +5,6 @@ const userCreateController = async (req, res) => {
     try {
         const { username, email, password, address,  dob, } = req.body;
 
-        console.log("Received data - Username:", username, ", Email:", email, ", Password:", password,  "address:", address,  "dob",  dob);
 
         if (!username || !email || !password) {
             return res.status(400).json({ message: "All fields are required!" });

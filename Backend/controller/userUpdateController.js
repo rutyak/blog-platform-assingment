@@ -5,8 +5,6 @@ const userUpdateController = async (req, res) => {
     const { username, email, address, dob } = req.body;
     const { id } = req.params;
 
-    console.log("Received data to update:", req.body);
-
     if (!id) {
       return res.status(400).json({ message: "User ID is required!" });
     }
@@ -16,11 +14,10 @@ const userUpdateController = async (req, res) => {
       return res.status(404).json({ message: "User not found!" });
     }
 
-    // Update fields only if provided
     if (username) user.username = username;
     if (email) user.email = email;
     if (address) user.address = address;
-    if (dob) user.dob = String(dob); // Convert DOB to a string before updating
+    if (dob) user.dob = String(dob); 
 
     const updatedUser = await user.save();
 
