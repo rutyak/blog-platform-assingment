@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 const App = () => {
 
   return (
-    <div className="bg-[#f5f7fa]">
+    <div className="bg-appbgcolor">
           <Navbar/>
           <Outlet/>
     </div>

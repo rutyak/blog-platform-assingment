@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { CircularProgress, TextField, MenuItem } from "@mui/material"; // Material-UI components
+import { CircularProgress, TextField, MenuItem } from "@mui/material"; 
 import PostCard from "../../components/PostCard";
 
 const Base_url = process.env.REACT_APP_BACKEND_URL;
@@ -8,8 +8,8 @@ const Base_url = process.env.REACT_APP_BACKEND_URL;
 function Home() {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [tags, setTags] = useState([]); // Unique tags for filtering
-  const [selectedTag, setSelectedTag] = useState(""); // Selected tag for filtering
+  const [tags, setTags] = useState([]); 
+  const [selectedTag, setSelectedTag] = useState(""); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +19,6 @@ function Home() {
         setPosts(data);
         setFilteredPosts(data);
 
-        // Extract unique tags from posts
         const uniqueTags = Array.from(
           new Set(data.flatMap((post) => post.tags || []))
         );
@@ -34,11 +33,10 @@ function Home() {
     fetchPosts();
   }, []);
 
-  // Handle tag selection
   const handleTagChange = (tag) => {
     setSelectedTag(tag);
     if (tag === "") {
-      setFilteredPosts(posts); // Show all posts if no tag is selected
+      setFilteredPosts(posts); 
     } else {
       setFilteredPosts(posts.filter((post) => post.tags.includes(tag)));
     }
@@ -46,28 +44,28 @@ function Home() {
 
   return (
     <div className="min-h-screen p-6">
-      <div className="text-center py-12 text-white rounded-lg shadow-lg mb-8 bg-[linear-gradient(151.71deg,_#29C986_0%,_#2FC8E5_100%)]">
-        <h1 className="text-4xl font-bold mb-4">
+      <div className="text-center py-10 text-white rounded-lg shadow-lg mb-8 bg-[linear-gradient(151.71deg,_#29C986_0%,_#2FC8E5_100%)] mobile:py-7 md:py-12">
+        <h1 className="text-4xl font-bold mb-4 mobile:text-2xl md:text-3xl">
           Welcome to Our Blogging Platform
         </h1>
-        <p className="text-lg mb-6">
+        <p className="text-lg mb-6 mobile:text-sm md:text-lg">
           Discover, create, and share your thoughts with the world!
         </p>
       </div>
 
       <section>
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-gray-800">Recent Posts</h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mobile:text-[17px] md:text-xl">Recent Posts</h2>
           <div className="flex items-center gap-4">
             <div className="flex items-center space-x-4">
-              <h3 className="text-lg font-semibold text-gray-800">Filter by Tag</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mobile:text-[17px] md:text-xl">Filter by Tag</h3>
               <TextField
                 select
                 label="Select Tag"
                 value={selectedTag}
                 onChange={(e) => handleTagChange(e.target.value)}
                 variant="outlined"
-                className="w-60 text-md"
+                className="w-60 text-md mobile:w-40 md:w-60"
               >
                 <MenuItem value="">All Tags</MenuItem>
                 {tags.map((tag) => (

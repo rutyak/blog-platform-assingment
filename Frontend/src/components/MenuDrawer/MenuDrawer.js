@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {List, ListItem, ListItemText } from "@mui/material";
 
 const MenuDrawer = ({user, toggleDrawer, handleLogout}) => {
@@ -20,9 +20,6 @@ const MenuDrawer = ({user, toggleDrawer, handleLogout}) => {
           </Link>
         </ListItem>
         <ListItem button>
-          <Link to="/dashboard" className="text-lg text-black">
-            <ListItemText primary="Dashboard" />
-          </Link>
         </ListItem>
         <ListItem button>
           <Link to="/createblog" className="text-lg text-black">

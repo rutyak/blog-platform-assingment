@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode"; // Correct the import
+import {jwtDecode} from "jwt-decode"; 
 
 const Base_url = process.env.REACT_APP_BACKEND_URL;
 
@@ -16,11 +16,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await axios.post(`${Base_url}/login`, credentials);
       
-      // Save token and user data to localStorage
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("token", data.token);
 
-      // Decode the token and set user state
       const decodedToken = jwtDecode(data.token);
       if (decodedToken.exp * 1000 < Date.now()) {
         throw new Error("Token has expired");

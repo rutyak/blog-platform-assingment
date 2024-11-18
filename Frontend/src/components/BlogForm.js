@@ -45,7 +45,9 @@ function BlogForm({
       const res = await method(url, obj);
 
       if (res.status === (isEditMode ? 200 : 201)) {
-        toast.success(`Post ${isEditMode ? "updated" : "created"} successfully!`);
+        if(!toast.isActive("create blog")){
+          toast.success(`Post ${isEditMode ? "updated" : "created"} successfully!`,{toastId:"create blog"});
+        }
         onSuccess();
         if (onClose) onClose();
       }
@@ -71,8 +73,8 @@ function BlogForm({
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[87.9vh] ">
-      <div className="bg-white w-[512px] shadow-md rounded-lg p-6 max-w-lg">
+    <div className="flex justify-center items-center min-h-[87.9vh]">
+      <div className="bg-white w-[512px] shadow-md rounded-lg p-6 max-w-lg mt-[-50px]">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
           {isEditMode ? "Edit Blog Post" : "Create a New Blog Post"}
         </h2>

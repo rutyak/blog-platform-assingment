@@ -31,7 +31,6 @@ const PostCard = ({ editMode, post, onEdit, onDelete }) => {
           </div>
         )}
         <Link
-          to={`/posts/${post._id}`}
           className="inline-block bg-gray-200 text-gray-800 font-medium px-3 py-2 rounded-lg text-sm hover:bg-gray-300 transition"
         >
           Read More

@@ -14,21 +14,16 @@ function BlogPosts({editMode}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
-  // Fetch posts
   const fetchPosts = async () => {
     try {
       const { data } = await axios.get(
         `${Base_url}/fetch/post/${userData._id}`
       );
       setPosts(data);
-      console.log("data: ",data);
 
     } catch (error) {
-      toast.error("Failed to fetch posts. Please try again later.", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-      });
+      // toast.error("Failed to fetch posts. Please try again later.");
+      console.error(error);
     }
   };
 
@@ -36,36 +31,25 @@ function BlogPosts({editMode}) {
     if (userData?._id) fetchPosts();
   }, [userData]);
 
-  // Confirm delete post
   const confirmDelete = (post) => {
     setSelectedPost(post);
     setIsOpen(true);
   };
 
-  // Handle delete post
   const deletePost = async () => {
     try {
       await axios.delete(`${Base_url}/delete/post/${selectedPost?._id}`);
       setPosts((prevPosts) =>
         prevPosts.filter((post) => post._id !== selectedPost?._id)
       );
-      toast.success(`${selectedPost?.title} has been deleted.`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-      });
+      toast.success(`${selectedPost?.title} has been deleted.`);
       setIsOpen(false);
       setSelectedPost(null);
     } catch (error) {
-      toast.error("Error deleting post. Please try again.", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-      });
+      toast.error("Error deleting post. Please try again.");
     }
   };
 
-  // Open edit modal
   const openEditModal = (post) => {
     setSelectedPost(post);
     setIsEditOpen(true);
@@ -86,7 +70,6 @@ function BlogPosts({editMode}) {
         ))}
       </div>
 
-      {/* Delete Confirmation Modal */}
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30">
           <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
@@ -113,7 +96,6 @@ function BlogPosts({editMode}) {
         </div>
       )}
 
-      {/* Edit Post Modal */}
       {isEditOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 w-full">
           <BlogForm

@@ -8,8 +8,8 @@ import App from "./App";
 import Home from "./pages/Home/Home";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
-import Signin from "./pages/authentication/signin";
-import Signup from "./pages/authentication/signup";
+import Signin from "./pages/Auth/signin";
+import Signup from "./pages/Auth/signup";
 import BlogForm from "./components/BlogForm";
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 

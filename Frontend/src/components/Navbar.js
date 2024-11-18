@@ -5,43 +5,45 @@ import { Menu, MenuItem, IconButton, Button, Drawer } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import { toast } from "react-toastify";
-import MenuDrawer from "../pages/MenuDrawer/MenuDrawer";
+import MenuDrawer from "./MenuDrawer/MenuDrawer";
 
 function Navbar() {
   const { user, logout } = useAuth();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null); 
+  const [drawerOpen, setDrawerOpen] = useState(false); 
 
   const navigate = useNavigate();
 
   const pageStyle = "text-lg text-black hover:text-hovercolor";
 
-  const handleProfileMenuOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget); 
+  };
+
   const handleProfileMenuClose = () => {
-    navigate("/profile");
+    setAnchorEl(null); 
   };
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
       return;
     }
-    setDrawerOpen(open);
+    setDrawerOpen(open); 
   };
 
   const handleLogout = () => {
     logout();
     toast.success("Logged out successfully!");
     handleProfileMenuClose();
+    navigate("/signin");
   };
 
-
   return (
-    <nav className="text-black px-6 py-6 flex justify-between items-center">
-      {/* Navbar Title */}
-      <div className="text-teal-600 text-xl font-semibold">Blog Platform</div>
+    <nav className="text-black px-6 py-4 flex justify-between items-center">
+      <div className="text-teal-600 text-3xl font-semibold">Blog Platform</div>
 
-      {/* Desktop Links */}
-      <div className="hidden lg:flex items-center space-x-4">
+      {/* Desktop Navigation */}
+      <div className="hidden lg:flex items-center space-x-10">
         <Link to="/" className={pageStyle}>
           Home
         </Link>
@@ -51,7 +53,6 @@ function Navbar() {
 
         {user ? (
           <div>
-            {/* Profile Icon with Menu */}
             <IconButton
               edge="end"
               color="inherit"
@@ -60,7 +61,7 @@ function Navbar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
             >
-              <AccountCircleIcon />
+              <AccountCircleIcon sx={{ width: 40, height: 40}}/>
             </IconButton>
             <Menu
               anchorEl={anchorEl}
@@ -75,9 +76,16 @@ function Navbar() {
                 horizontal: "right",
               }}
               open={Boolean(anchorEl)}
-              onClose={handleProfileMenuClose}
+              onClose={handleProfileMenuClose} 
             >
-              <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleProfileMenuClose();
+                  navigate("/profile");
+                }}
+              >
+                Profile
+              </MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
@@ -105,7 +113,7 @@ function Navbar() {
         )}
       </div>
 
-      {/* Mobile Hamburger Menu */}
+      {/* Mobile Navigation */}
       <div className="flex gap-4 items-center justify-center lg:hidden">
         <p className="text-lg hover:text-hovercolor">Menu</p>
         <IconButton
@@ -117,7 +125,11 @@ function Navbar() {
           <MenuIcon />
         </IconButton>
         <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-          <MenuDrawer user={user} toggleDrawer={toggleDrawer} handleLogout={handleLogout}/>
+          <MenuDrawer
+            user={user}
+            toggleDrawer={toggleDrawer}
+            handleLogout={handleLogout}
+          />
         </Drawer>
       </div>
     </nav>

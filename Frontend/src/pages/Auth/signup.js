@@ -29,7 +29,7 @@ const Signup = () => {
       return;
     }
 
-    setLoading(true); // Start loading
+    setLoading(true); 
 
     try {
       const obj = {
@@ -38,7 +38,7 @@ const Signup = () => {
         password,
       };
 
-      const { success } = await register(obj); // Register returns a success message
+      const { success } = await register(obj); 
       if (success) {
         toast.success("Registered successfully!");
         navigate("/signin");

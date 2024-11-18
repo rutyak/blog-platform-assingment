@@ -3,13 +3,12 @@ import { Avatar, Button, TextField } from "@mui/material";
 import BlogPosts from "../../components/BlogPosts";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 const Base_url = process.env.REACT_APP_BACKEND_URL;
 
 const Profile = () => {
-  // State to toggle between "Account Details" and "Blog Posts"
   const [activeSection, setActiveSection] = useState("account");
 
-  // State for form inputs
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDob] = useState("");
@@ -17,51 +16,46 @@ const Profile = () => {
 
   const { userData } = useAuth(); 
 
-  // Handle Save Changes
   const handleSave = async () => {
     const updatedProfile = { username, email, dob, address };
     try {
-      const response = await axios.patch(`${Base_url}/profile/${userData._id}`, updatedProfile);
-      console.log("Profile updated successfully:", response.data);
-      alert("Profile updated successfully!");
+      await axios.patch(`${Base_url}/profile/${userData._id}`, updatedProfile);
+      toast.success("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile. Please try again later.");
+      toast.error("Failed to update profile. Please try again later.");
     }
   };
 
   return (
     <div className="min-h-[87.9vh] bg-gray-100">
-      {/* Header Section */}
-      <div className="relative bg-gradient-to-r from-blue-500 to-green-500 h-40 flex items-center justify-center shadow-lg">
-        <div className="absolute bottom-[-3rem] flex flex-col items-center">
+      <div className="relative bg-gradient-to-r from-blue-500 to-green-500 h-60 flex items-center justify-center shadow-lg">
+        <div className="absolute bottom-[1rem] flex flex-col items-center">
           <Avatar
             alt="User Profile"
             src="/static/images/avatar/1.jpg"
             sx={{
-              width: 40,
-              height: 40,
+              width: 150, 
+              height: 150,
+              marginBottom: 1,
               border: "4px solid white",
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
             }}
           />
           <div className="relative mt-2">
-            <span className="bg-gray-800 text-white text-sm px-3 py-1 rounded-full shadow-md">
-              Rutik
+            <span className="bg-gray-800 text-white text-xl px-4 py-2 rounded-full shadow-md">
+              Rutik 
             </span>
           </div>
         </div>
       </div>
 
-      {/* Main Content Section */}
-      <div className="mt-24 flex justify-center px-6 gap-6">
-        {/* Sidebar */}
+      <div className="mt-16 flex justify-center px-6 gap-6 mobile:flex-col md:flex-row">
         <div className="w-full md:w-1/4 bg-white shadow-md rounded-lg p-6">
           <h3 className="text-lg font-semibold mb-6 text-gray-800">
             Account Options
           </h3>
           <div className="space-y-4">
-            {/* Personal Details */}
             <Button
               variant={activeSection === "account" ? "contained" : "outlined"}
               fullWidth
@@ -80,7 +74,6 @@ const Profile = () => {
             >
               Account Details
             </Button>
-            {/* Blog Posts */}
             <Button
               variant={activeSection === "blog" ? "contained" : "outlined"}
               fullWidth
@@ -101,7 +94,6 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Main Content */}
         <div className="w-full md:w-3/4 bg-white shadow-md rounded-lg p-6">
           {activeSection === "account" && (
             <div>
